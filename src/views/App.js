@@ -1,9 +1,12 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import { Counter } from "../components/counter/Counter";
+import "./App.css";
 
 function App() {
+  fetch("http://localhost:3001/users")
+    .then((response) => response.text())
+    .then((data) => console.log({ data }));
   return (
     <div className="App">
       <header className="App-header">
