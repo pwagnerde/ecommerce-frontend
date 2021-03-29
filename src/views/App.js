@@ -1,61 +1,30 @@
 import React from "react";
-import logo from "./logo.svg";
-import { Counter } from "../components/counter/Counter";
-import "./App.css";
+import ScrollToTop from "../helpers/scroll-top";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import HomeFashionSix from "./home-page/HomeFashionSix";
 
-function App() {
-  fetch("http://localhost:3001/users")
-    .then((response) => response.text())
-    .then((data) => console.log({ data }));
+const App = () => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <Router>
+      <ScrollToTop>
+        <Switch>
+          <Route
+            exact
+            path={process.env.PUBLIC_URL + "/"}
+            component={HomeFashionSix}
+          />
+          {/* Cart page */}
+          <Route
+            path={process.env.PUBLIC_URL + "/cart"}
+            component={HomeFashionSix}
+          />
+          {/* Not found */}
+          <Route exact component={HomeFashionSix} />
+        </Switch>
+      </ScrollToTop>
+    </Router>
   );
-}
+};
 
 export default App;
