@@ -5,7 +5,7 @@ import ProductGridFive from "./ProductGridFive";
 const ProductGridFiveContainer = ({
   spaceTopClass,
   spaceBottomClass,
-  category
+  products
 }) => {
   return (
     <div
@@ -16,7 +16,7 @@ const ProductGridFiveContainer = ({
       <div className="container-fluid">
         <div className="row">
           <ProductGridFive
-            category={category}
+            products={products}
             spaceBottomClass="mb-20"
           />
         </div>
@@ -26,7 +26,7 @@ const ProductGridFiveContainer = ({
 };
 
 ProductGridFiveContainer.propTypes = {
-  category: PropTypes.string,
+  products: PropTypes.array,
   spaceBottomClass: PropTypes.string,
   spaceTopClass: PropTypes.string
 };

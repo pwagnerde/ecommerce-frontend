@@ -52,10 +52,10 @@ const HeaderSix = ({ layout, headerPaddingClass, headerBgClass }) => {
             {/* header logo */}
             <div className="logo text-center logo-hm5">
               <Link className="sticky-none" to={process.env.PUBLIC_URL + "/"}>
-                <img alt="" src="assets/img/logo/logo-2.png" />
+                <img alt="" src={process.env.PUBLIC_URL + "/assets/img/logo/logo-2.png"} />
               </Link>
               <Link className="sticky-block" to={process.env.PUBLIC_URL + "/"}>
-                <img alt="" src="assets/img/logo/logo.png" />
+                <img alt="" src={process.env.PUBLIC_URL + "/assets/img/logo/logo.png"} />
               </Link>
             </div>
           </div>

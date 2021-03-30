@@ -3,14 +3,13 @@ import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import ProductGridSingleFive from "../../components/product/ProductGridSingleFive";
 import { addToCart, selectCarts } from "../../stores/cartSlice";
-import { selectProducts } from "../../stores/productSlice";
 
 const ProductGridFive = ({
   sliderClassName,
   spaceBottomClass,
-  category
+  products
 }) => {
-  const products = useSelector(selectProducts).slice(0, 4);
+
   const cartItems = useSelector(selectCarts);
   return (
     <Fragment>
@@ -35,7 +34,7 @@ const ProductGridFive = ({
 ProductGridFive.propTypes = {
   sliderClassName: PropTypes.string,
   spaceBottomClass: PropTypes.string,
-  category: PropTypes.string,
+  products: PropTypes.array,
 
 };
 

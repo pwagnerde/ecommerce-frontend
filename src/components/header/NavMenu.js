@@ -28,6 +28,9 @@ const NavMenu = ({ menuWhiteClass, sidebarMenu }) => {
             </Link>
           </li>
           <li>
+            <Link to={process.env.PUBLIC_URL + "/"}>{"Logout"}</Link>
+          </li>
+          <li>
             <Link to={process.env.PUBLIC_URL + "/cart"}>{"My cart"}</Link>
           </li>
           <li>

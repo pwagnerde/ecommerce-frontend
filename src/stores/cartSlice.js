@@ -17,16 +17,14 @@ export const cartSlice = createSlice({
       if (cartItem === -1) {
         state.cartItems.push({
           ...product,
-          quantity: product.quantity ? product.quantity : 1,
+          quantity: 1,
           cartItemId: uuidv4(),
         });
       } else {
         const item = state.cartItems[cartItem];
         state.cartItems[cartItem] = {
           ...item,
-          quantity: product.quantity
-            ? item.quantity + product.quantity
-            : item.quantity + 1,
+          quantity: item.quantity + 1,
         };
       }
     },
@@ -39,9 +37,7 @@ export const cartSlice = createSlice({
         const item = state.cartItems[cartItem];
         state.cartItems[cartItem] = {
           ...item,
-          quantity: product.quantity
-            ? item.quantity + product.quantity
-            : item.quantity - 1,
+          quantity: item.quantity - 1,
         };
       }
     },
@@ -51,7 +47,7 @@ export const cartSlice = createSlice({
           (item) => item.cartItemId !== product.cartItemId
         );
     },
-    deleteAllCart: (state) => {
+    deleteAllFromCart: (state) => {
       state.cartItems = [];
     },
   },
@@ -61,7 +57,7 @@ export const {
   addToCart,
   decreaseQuantity,
   deleteFromCart,
-  deleteAllCart,
+  deleteAllFromCart,
 } = cartSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -70,7 +66,7 @@ export const {
 // code can then be executed and other actions can be dispatched
 export const deletAllAsync = () => (dispatch) => {
   setTimeout(() => {
-    dispatch(deleteAllCart());
+    dispatch(deleteAllFromCart());
   }, 1000);
 };
 
