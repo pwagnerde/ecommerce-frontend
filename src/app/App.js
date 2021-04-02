@@ -18,15 +18,11 @@ const App = () => {
           <Route exact path="/" component={Home} />
           {/* Product page */}
           <Route
-            path={process.env.PUBLIC_URL + "/product/:id"}
-            render={(routeProps) => (
-              <Product {...routeProps} key={routeProps.match.params.id} />
-            )}
-          />
+            path="/product/:id" component={Product} />
 
           {/* Login page */}
-          <Route path={"/login"} component={LoginRegister} />
-          <Route path={"/register"} component={LoginRegister} />
+          <Route path="/login" component={LoginRegister} />
+          <Route path="/register" component={LoginRegister} />
 
           {/* Cart page */}
           <Route path="/cart" component={Cart} />

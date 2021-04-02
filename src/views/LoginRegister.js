@@ -34,9 +34,10 @@ const LoginRegister = () => {
                           <div className="login-register-form">
                             <form>
                               <input
-                                type="text"
-                                name="user-name"
-                                placeholder="Username"
+                                name="user-email"
+                                placeholder="Email"
+                                type="email"
+                                required
                               />
                               <input
                                 type="password"
@@ -58,15 +59,14 @@ const LoginRegister = () => {
                             <form>
                               <input
                                 type="text"
-                                name="user-name"
-                                placeholder="Username"
+                                name="first-name"
+                                placeholder="First name"
                                 required
                               />
                               <input
                                 type="text"
-                                name="first-name"
-                                placeholder="First name"
-                                required
+                                name="middle-name"
+                                placeholder="Middle name"
                               />
                               <input
                                 type="text"

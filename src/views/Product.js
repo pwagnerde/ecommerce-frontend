@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import LayoutSeven from "../layouts/LayoutSeven";
-import { useParams} from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProductDescriptionTab from "../layouts/wrappers/ProductDescriptionTab";
 import ProductImageDescription from "../layouts/wrappers/ProductImageDescription";
@@ -9,11 +8,10 @@ import ProductGridFiveContainer from "../layouts/wrappers/ProductGridFiveContain
 import SectionTitle from "../components/section-title/SectionTitle";
 import { selectProducts } from "../stores/productSlice";
 
-const Product = () => {
-  const params = useParams();
-  const itemId = params.id;
+const Product = (props) => {
+  const itemId = parseInt(props.match.params.id);
   const products = useSelector(selectProducts);
-  let product = products.filter(
+  const product = products.filter(
     single => single.id === itemId
   )[0];
   return (
