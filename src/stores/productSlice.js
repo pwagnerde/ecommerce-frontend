@@ -27,7 +27,13 @@ export const getProducts = () => {
   return async (dispatch, getState) => {
     const response = await fetch(`http://localhost:3080/products`);
     const payload = await response.json();
-    dispatch({ type: "product/fetchProducts", payload: payload });
+    
+    /* To be changed after component update */
+    const transformedPayload = payload.map(product => {
+      return { ...product, id: product.product_id }
+    });
+    
+    dispatch({ type: "product/fetchProducts", payload: transformedPayload });
   };
 };
 
