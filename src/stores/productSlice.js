@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-//import productData from "../models/products.json";
+import { productAPI } from "../models/productAPI";
 
 export const productSlice = createSlice({
   name: "product",
@@ -18,24 +18,10 @@ export const productSlice = createSlice({
 
 export const { fetchProducts } = productSlice.actions;
 
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched
+// The function below is called a thunk and allows us to perform async logic.
+// The functions are implemented in the models directory
 
-export const getProducts = () => {
-  return async (dispatch, getState) => {
-    const response = await fetch(`http://localhost:3080/products`);
-    const payload = await response.json();
-    
-    /* To be changed after component update */
-    const transformedPayload = payload.map(product => {
-      return { ...product, id: product.product_id }
-    });
-    
-    dispatch({ type: "product/fetchProducts", payload: transformedPayload });
-  };
-};
+export const getProducts = productAPI.getProducts;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
