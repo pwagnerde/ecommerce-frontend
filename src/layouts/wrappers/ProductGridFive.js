@@ -21,9 +21,9 @@ const ProductGridFive = ({
             product={product}
             addToCart={addToCart}
             cartItem={
-              cartItems.filter(cartItem => cartItem.id === product.id)[0]
+              cartItems.filter(cartItem => cartItem.product_id === product.product_id)[0]
             }
-            key={product.id}
+            key={product.product_id}
           />
         );
       })}

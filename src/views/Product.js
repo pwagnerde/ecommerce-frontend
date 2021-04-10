@@ -12,7 +12,7 @@ const Product = (props) => {
   const itemId = parseInt(props.match.params.id);
   const products = useSelector(selectProducts);
   const product = products.filter(
-    single => single.id === itemId
+    single => single.product_id === itemId
   )[0];
   return (
     <Fragment>
@@ -37,7 +37,7 @@ const Product = (props) => {
             <div className="row">
               <ProductGridFiveContainer
                 spaceBottomClass="pb-100"
-                products={products.filter((single) => single.id !== itemId)}
+                products={products.filter((single) => single.product_id !== itemId)}
               />
             </div>
           </div>

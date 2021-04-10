@@ -12,14 +12,16 @@ axios.defaults.baseURL = BASE_URL;
 export const productAPI = {
   getProducts: () => {
     return async (dispatch, getState) => {
-      const response = await axios.get("/products");
-      const payload = response.data;
-      /* To be changed after component update */
-      const transformedPayload = payload.map((product) => {
-        return { ...product, id: product.product_id };
-      });
+      try {
+        const response = await axios.get("/products");
 
-      dispatch({ type: "product/fetchProducts", payload: transformedPayload });
+        dispatch({
+          type: "product/fetchProducts",
+          payload: response.data,
+        });
+      } catch (err) {
+        console.log(err);
+      }
     };
   },
 };

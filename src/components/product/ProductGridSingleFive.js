@@ -38,7 +38,7 @@ const ProductGridSingleFive = ({
           }`}
         >
           <div className="product-img">
-            <Link to={process.env.PUBLIC_URL + "/product/" + product.id}>
+            <Link to={process.env.PUBLIC_URL + "/product/" + product.product_id}>
               <img
                 className="default-img"
                 src={process.env.PUBLIC_URL + product.image[0]}
@@ -63,7 +63,7 @@ const ProductGridSingleFive = ({
                 <div className="product-title">
                   <h3>
                     <Link
-                      to={process.env.PUBLIC_URL + "/product/" + product.id}
+                      to={process.env.PUBLIC_URL + "/product/" + product.product_id}
                     >
                       {product.name}
                     </Link>
@@ -95,14 +95,7 @@ const ProductGridSingleFive = ({
                         {" "}
                         <i className="fa fa-shopping-cart"></i>{" "}
                       </a>
-                    ) : product.variation && product.variation.length >= 1 ? (
-                      <Link
-                        to={`${process.env.PUBLIC_URL}/product/${product.id}`}
-                        title="Select options"
-                      >
-                        <i class="fa fa-cog"></i>
-                      </Link>
-                    ) : product.stock && product.stock > 0 ? (
+                    ) :  product.stock && product.stock > 0 ? (
                       <button
                         onClick={() => dispatch(addToCart(product))}
                         className={

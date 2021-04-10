@@ -5,12 +5,13 @@ import SectionTitleWithText from "../components/section-title/SectionTitleWithTe
 import CountDownThree from "../layouts/wrappers/CountDownThree";
 import ProductGridFiveContainer from "../layouts/wrappers/ProductGridFiveContainer";
 import FeatureIconTwo from "../layouts/wrappers/FeatureIconTwo";
-import { selectProducts } from "../stores/productSlice";
+import { selectProducts, selectStatus } from "../stores/productSlice";
 import { useSelector } from "react-redux";
 
 const Home = () => {
   const products = useSelector(selectProducts).slice(0, 4);
-  
+  const status = useSelector(selectStatus);
+
   return (
     <Fragment>
       <LayoutSeven>
@@ -26,11 +27,15 @@ const Home = () => {
           countDownImage="/img/banner/ledger-nano-x-1-special.png"
         />
         {/* product grid */}
-        <ProductGridFiveContainer
-          spaceTopClass="pt-100"
-          spaceBottomClass="pb-100"
-          products={products}
-        />
+        {status === "succeeded" ? (
+          <ProductGridFiveContainer
+            spaceTopClass="pt-100"
+            spaceBottomClass="pb-100"
+            products={products}
+          />
+        ) : (
+          <p>"Loading in process"</p>
+        )}
         {/* feature icon */}
         <FeatureIconTwo spaceTopClass="pt-100" spaceBottomClass="pb-60" />
       </LayoutSeven>

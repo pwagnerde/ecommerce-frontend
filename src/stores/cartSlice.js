@@ -13,7 +13,7 @@ export const cartSlice = createSlice({
     // immutable state based off those changes
     addToCart: (state, action) => {
       const product = action.payload;
-      const cartItem = state.cartItems.findIndex((item) => item.id === product.id);
+      const cartItem = state.cartItems.findIndex((item) => item.product_id === product.product_id);
       if (cartItem === -1) {
         state.cartItems.push({
           ...product,
@@ -33,7 +33,7 @@ export const cartSlice = createSlice({
       if (product.quantity === 1) {
         state.cartItems = state.cartItems.filter((item) => item.cartItemId !== product.cartItemId);
       } else {
-        const cartItem = state.cartItems.findIndex((item) => item.id === product.id);
+        const cartItem = state.cartItems.findIndex((item) => item.product_id === product.product_id);
         const item = state.cartItems[cartItem];
         state.cartItems[cartItem] = {
           ...item,
