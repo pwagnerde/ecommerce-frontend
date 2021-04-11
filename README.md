@@ -1,68 +1,184 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# The E-Commerce Client (React UI)
 
-## Available Scripts
+> The E-Commerce Frontend is a fully-functioning e-commerce application that allows users to register an account, browse products for sale, and complete a purchase.
 
-In the project directory, you can run:
+## Table of contents
 
-### `yarn start`
+* [General info](#general-info)
+* [Screenshots](#screenshots)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Features](#features)
+* [Status](#status)
+* [Inspiration](#inspiration)
+* [Contact](#contact)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## General info
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+The purpose of this project is to help me to better understand React, Redux, Jest, Enzyme, the Axios API and to inspire people with valuable content.
 
-### `yarn test`
+## Screenshots
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![Example screenshot](./img/screenshot.png)
 
-### `yarn build`
+## Technologies
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* React - version 17.0.1
+* React router-dom - version 5.2.0
+* React redux - version 7.1.3
+* Redux toolkit - version 1.1.0
+* Axios - version 0.21.1
+* Bootstrap - version 4.6.0
+* Formik - version 2.2.6
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Setup
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Please use yarn install & yarn start to run the application in your local environment. Please also install my E-commerce backend.
 
-### `yarn eject`
+## Code Examples
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Examples of customer slice (incl. thunks for API connection):
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```javascript
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+// Get Axios base URL from environment variable
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
-## Learn More
+// The function below is called a thunk and allows us to perform async logic.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+export const register = createAsyncThunk(
+  "customer/register",
+  async (arg, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/auth/register", arg);
+      console.log("Response:" + response);
+      return response.data;
+    } catch (err) {
+      console.log("Error:" + err);
+      return rejectWithValue(err.response.data.message);
+    }
+  }
+);
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+export const login = createAsyncThunk(
+  "customer/login",
+  async (arg, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/auth/login", arg);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data.message);
+    }
+  }
+);
 
-### Code Splitting
+export const logout = createAsyncThunk(
+  "customer/logout",
+  async (arg, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/auth/logout");
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data.message);
+    }
+  }
+);
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+export const customerSlice = createSlice({
+  name: "customer",
+  initialState: {
+    id: "",
+    data: {},
+    isLoggedIn: false,
+    status: "idle",
+    message: null,
+  },
+  reducers: {},
+  extraReducers: {
+    [register.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [register.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      state.id = action.payload.customer_id;
+      state.isLoggedIn = false;
+      state.message = "User account created. Please login.";
+      state.data = action.payload;
+    },
+    [register.rejected]: (state, action) => {
+      state.status = "failed";
+      state.message = action.payload;
+    },
+    [login.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [login.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      state.id = action.payload.customer_id;
+      state.isLoggedIn = true;
+      state.message = null;
+      state.data = action.payload;
+    },
+    [login.rejected]: (state, action) => {
+      state.status = "failed";
+      state.message = action.payload;
+    },
+    [logout.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [logout.fulfilled]: (state, action) => {
+      state.status = "idle";
+      state.id = "";
+      state.isLoggedIn = false;
+      state.data = {};
+      state.message = null;
+    },
+    [logout.rejected]: (state, action) => {
+      state.status = "failed";
+      state.message = action.payload;
+    },
+  },
+});
 
-### Analyzing the Bundle Size
+export const selectCustomer = (state) => state.customer;
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+export default customerSlice.reducer;
 
-### Making a Progressive Web App
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## Features
 
-### Advanced Configuration
+List of features ready and TODOs for future development
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+* Landing page
+* Product detail page (incl. backend integration)
+* Shopping cart page
+* Login / register / logout page (incl. backend integration)
+* Checkout page
 
-### Deployment
+To-do list:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+* Integrate cart & order endpoints into Redux
+* Order management & history page
+* Exchange demo product content
+* 3rd party login via Google and Amazon
+* Process payments via Stripe and Paypal
+* Manage user account data
+* Test cases for frontend
+* Deploy frontend to Heroku
+* Connect shop to fancy URL
 
-### `yarn build` fails to minify
+## Status
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Project is: _wip_
+
+## Inspiration
+
+Thanks to Codecademy for providing inspiring content.
+
+## Contact
+
+Created by [@pwagnerde](https://www.linkedin.com/in/pwagnerde/) - feel free to contact me!
