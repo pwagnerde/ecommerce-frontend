@@ -14,8 +14,6 @@ package-lock.json
 
 # misc
 .DS_Store
-/public/assets
-/src/assets
 
 # Logs
 logs
