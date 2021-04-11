@@ -34,7 +34,7 @@ const Home = () => {
             products={products}
           />
         ) : (
-          <p>"Loading in process"</p>
+          <p>Loading in process...</p>
         )}
         {/* feature icon */}
         <FeatureIconTwo spaceTopClass="pt-100" spaceBottomClass="pb-60" />

@@ -33,8 +33,3 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
-
-# Test pages
-src/views/App_old.js
-src/views/App.css
-src/index.css

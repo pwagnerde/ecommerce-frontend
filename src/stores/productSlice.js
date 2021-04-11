@@ -5,10 +5,17 @@ import axios from "axios";
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 // The function below is called a thunk and allows us to perform async logic.
-export const getProducts = createAsyncThunk("product/getProducts", async () => {
-  const response = await axios.get("/products");
-  return response.data;
-});
+export const getProducts = createAsyncThunk(
+  "product/getProducts",
+  async (arg,{ rejectWithValue }) => {
+    try {
+      const response = await axios.get("/products");
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data.message);
+    }
+  }
+);
 
 // A function that accepts an initial state, an object full of reducer functions,
 // and a "slice name", and automatically generates action creators and action
@@ -18,7 +25,7 @@ export const productSlice = createSlice({
   initialState: {
     products: [],
     status: "idle",
-    error: null,
+    message: null,
     currencySymbol: "€",
     currencyName: "EUR",
     currencyRate: 1,
@@ -38,7 +45,7 @@ export const productSlice = createSlice({
     },
     [getProducts.rejected]: (state, action) => {
       state.status = "failed";
-      state.error = action.error.message;
+      state.message = action.payload;
     },
   },
 });
