@@ -72,33 +72,33 @@ const LoginRegister = () => {
 
   const formikRegister = useFormik({
     initialValues: {
-      username: "PNewDigital",
-      first_name: "Philipp-Theodor",
-      middle_name: "Josef",
-      last_name: "Wagner",
-      email_address: "testHALLO12@pnew.digital",
-      address_street_no: "3",
-      address_street_name: "Hammanstrasse",
-      address_city: "Frankfurt",
-      address_state: "Hessen",
-      address_postal_code: "60322",
-      address_country_code: "DE",
-      password: "PNewDigital1980!",
-      confirm_password: "PNewDigital1980!",
+      username: "",
+      first_name: "",
+      middle_name: "",
+      last_name: "",
+      email_address: "",
+      address_street_no: "",
+      address_street_name: "",
+      address_city: "",
+      address_state: "",
+      address_postal_code: "",
+      address_country_code: "",
+      password: "",
+      confirm_password: "",
     },
     validate,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      //alert(JSON.stringify(values, null, 2));
       dispatch(register(values));
     },
   });
   const formikLogin = useFormik({
     initialValues: {
-      username: "PNewDigital",
-      password: "PNewDigital1980!",
+      username: "",
+      password: "",
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      //alert(JSON.stringify(values, null, 2));
       dispatch(login(values));
     },
   });
